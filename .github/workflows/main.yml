@@ -1,0 +1,23 @@
+on:
+  push:
+    branches: ['**']
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Run tests
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+      - name: Install python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.14'
+      - name: Run unittest
+        run: python -m unittest discover -v -s tests -t .
+    
